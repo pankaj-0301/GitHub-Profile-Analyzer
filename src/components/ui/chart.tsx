@@ -417,13 +417,14 @@ export function BarChart({
     active && payload ? (
       <ChartTooltipContent className="flex flex-col gap-0.5" payload={payload}>
         {payload.map((entry, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between gap-2"
-          >
+          <div key={i} className="flex items-center justify-between gap-2">
             <span className="text-muted-foreground">{entry.name}</span>
             <span className="font-medium tabular-nums">
-              {valueFormatter ? valueFormatter(entry.value) : entry.value}
+              {typeof entry.value === 'number'
+                ? valueFormatter
+                  ? valueFormatter(entry.value)
+                  : entry.value
+                : '--'}
             </span>
           </div>
         ))}
