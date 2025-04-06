@@ -416,24 +416,26 @@ export function BarChart({
             radius={[4, 4, 0, 0]}
           />
         ))}
-        <ChartTooltip
-          content={({ active, payload }) =>
-            active && payload ? (
-              <ChartTooltipContent
-                className="flex flex-col gap-0.5"
-                formatter={(value: number, name: string) => (
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-muted-foreground">{name}</span>
-                    <span className="font-medium tabular-nums">
-                      {valueFormatter ? valueFormatter(value) : value}
-                    </span>
-                  </div>
-                )}
-                payload={payload}
-              />
-            ) : null
-          }
-        />
+       <ChartTooltip
+  content={({ active, payload }) =>
+    active && payload ? (
+      <ChartTooltipContent className="flex flex-col gap-0.5" payload={payload}>
+        {payload.map((entry, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between gap-2"
+          >
+            <span className="text-muted-foreground">{entry.name}</span>
+            <span className="font-medium tabular-nums">
+              {valueFormatter ? valueFormatter(entry.value) : entry.value}
+            </span>
+          </div>
+        ))}
+      </ChartTooltipContent>
+    ) : null
+  }
+/>
+
       </RechartsPrimitive.BarChart>
     </ChartContainer>
   );
